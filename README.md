@@ -1,11 +1,11 @@
 # EchoBase
 
-🌐 在线浏览: https://alex-ai-future.github.io/EchoBase/
+🌐 Online: https://alex-ai-future.github.io/EchoBase/
 
 ---
 
-# 索引目录
+# Index
 
-| 主题 | 链接 |
-|------|------|
+| Topic | Link |
+|-------|------|
 | Test | [indexs/test.md](indexs/test.md) |

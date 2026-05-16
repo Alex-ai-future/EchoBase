@@ -1,47 +1,57 @@
-# 项目结构
+# Project Structure
 
 ## logs
-- **命名规则**: `YYYY.MM.D.N.md`（年.月.日.序号）
-  - 序号从 `0` 开始，两位数补零（如 `00`, `01`, `10`）
-  - 同一天允许创建多个log，按创建顺序递增
-  - 示例: `2026.05.16.00.md`, `2026.05.16.01.md`
-- **内容要求**:
-  - 必须包含有效Markdown内容，不允许空文件
-  - 语言风格：极度精简，逻辑严密，保持批判性思维
-  - 建议包含：核心观点/记录主题/关键结论
-- **编码**: UTF-8
+- **Naming Convention**: `YYYY.MM.D.N.md` (Year.Month.Day.Sequence)
+  - Sequence starts from `0`, two digits with leading zeros (e.g., `00`, `01`, `10`)
+  - Multiple logs per day are allowed, incremented by creation order
+  - Example: `2026.05.16.00.md`, `2026.05.16.01.md`
+- **Content Requirements**:
+  - Must contain valid Markdown content, no empty files allowed
+  - Language: Chinese
+  - Style: Extremely concise, logically rigorous, maintain critical thinking
+  - Recommended: Core ideas / Record topics / Key conclusions
+- **Encoding**: UTF-8
 
 ## indexs
-- **命名规则**: 文件名（去后缀）代表主题名称，使用小写英文或中文，空格用 `-` 替代
-  - 示例: `ai-thinking.md`, `项目管理.md`
-- **内容格式**:
+- **Naming Convention**: Filename (without extension) represents the topic name, use lowercase English or Chinese, spaces replaced with `-`
+  - Example: `ai-thinking.md`, `项目管理.md`
+- **Content Format**:
   ```markdown
-  # 主题名称
+  # Topic Name
   
-  --- 2026年5月 ---
-  - [核心观点简述](../logs/YYYY.MM.D.N.md)
-  - [核心观点简述](../logs/YYYY.MM.D.N.md)
+  --- May 2026 ---
+  - [Brief description of core idea](../logs/YYYY.MM.D.N.md)
+  - [Brief description of core idea](../logs/YYYY.MM.D.N.md)
   
-  --- 2026年6月 ---
-  - [核心观点简述](../logs/YYYY.MM.D.N.md)
+  --- June 2026 ---
+  - [Brief description of core idea](../logs/YYYY.MM.D.N.md)
   ```
-- **时间分割**: 使用 `--- YYYY年M月 ---` 格式
-- **编码**: UTF-8
+- **Time Divider**: Use `--- Month YYYY ---` format (English)
+- **Encoding**: UTF-8
 
 ## README.md
-- **内容格式**: 使用Markdown表格或列表形式索引indexs中的文件
+- **Content Format**: Use Markdown table or list to index files in indexs
   ```markdown
-  # 索引目录
+  # EchoBase
   
-  | 主题 | 链接 |
-  |------|------|
-  | AI思考 | [indexs/ai-thinking.md](indexs/ai-thinking.md) |
-  | 项目管理 | [indexs/项目管理.md](indexs/项目管理.md) |
+  🌐 Online: https://alex-ai-future.github.io/EchoBase/
+  
+  ---
+  
+  # Index
+  
+  | Topic | Link |
+  |-------|------|
+  | AI Thinking | [indexs/ai-thinking.md](indexs/ai-thinking.md) |
+  | Project Management | [indexs/项目管理.md](indexs/项目管理.md) |
   ```
-- **排序**: 按主题名称字母/拼音顺序排列
-- **编码**: UTF-8
+- **Sorting**: Alphabetical order by topic name
+- **Encoding**: UTF-8
 
-## 通用规则
-- **冲突处理**: 如果文件名已存在，自动递增序号
-- **版本控制**: 所有文件需纳入Git管理
-- **路径引用**: 使用相对路径，从项目根目录开始
+## General Rules
+- **Conflict Handling**: If filename already exists, auto-increment the sequence number
+- **Version Control**: All files must be managed under Git
+- **Path References**: Use relative paths from project root
+- **Language Policy**: 
+  - `logs/` files: Chinese
+  - All other files (`indexs/`, `README.md`, `AGENTS.md`): English
