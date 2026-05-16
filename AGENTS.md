@@ -15,6 +15,7 @@
 ## indexs
 - **Naming Convention**: Filename (without extension) represents the topic name, use lowercase English or Chinese, spaces replaced with `-`
   - Example: `ai-thinking.md`, `项目管理.md`
+- **Special Index**: `all.md` - Contains all logs in chronological order
 - **Content Format**:
   ```markdown
   # Topic Name
