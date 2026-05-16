@@ -29,23 +29,28 @@
 - **Time Divider**: Use `--- Month YYYY ---` format (English)
 - **Encoding**: UTF-8
 
+## index.md
+- **Purpose**: Main page for GitHub Pages, displays all topics in table format
+- **Content Format**:
+  ```markdown
+  # Index
+  
+  | Topic | Description | Link |
+  |-------|-------------|------|
+  | TopicName | Brief description | [indexs/topic.md](indexs/topic.md) |
+  ```
+- **Encoding**: UTF-8
+
 ## README.md
-- **Content Format**: Use Markdown table or list to index files in indexs
+- **Purpose**: Project introduction and documentation
+- **Content Format**:
   ```markdown
   # EchoBase
   
+  EchoBase is a knowledge management system for recording and organizing thought logs.
+  
   🌐 Online: https://alex-ai-future.github.io/EchoBase/
-  
-  ---
-  
-  # Index
-  
-  | Topic | Link |
-  |-------|------|
-  | AI Thinking | [indexs/ai-thinking.md](indexs/ai-thinking.md) |
-  | Project Management | [indexs/项目管理.md](indexs/项目管理.md) |
   ```
-- **Sorting**: Alphabetical order by topic name
 - **Encoding**: UTF-8
 
 ## General Rules
