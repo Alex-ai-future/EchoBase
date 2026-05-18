@@ -5,3 +5,4 @@
 - [Study PR #42631 IR Op Priority Optimization](../logs/2026.05.16.04.md)
 - [Fix bug #41469 XPU platform missing AWQ dequantize CUDA kernel](../logs/2026.05.18.00.md)
 - [Study PR#42885 Enable FULL cudagraph capture for TRITON_MLA decode](../logs/2026.05.18.01.md)
+- [Study PR #42686 Add patch for fullgraph compilation](../logs/2026.05.18.02.md)
