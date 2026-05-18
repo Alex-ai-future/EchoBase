@@ -6,3 +6,4 @@
 - [VLLM RFC: Model Implementation Redesign](../logs/2026.05.16.02.md)
 - [Apple AI Signals and Agent Environment](../logs/2026.05.16.03.md)
 - [Study PR#42631 IR Op Priority Optimization](../logs/2026.05.16.04.md)
+- [Fix bug #41469 XPU platform missing AWQ dequantize CUDA kernel](../logs/2026.05.18.00.md)
