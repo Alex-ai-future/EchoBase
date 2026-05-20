@@ -10,3 +10,4 @@
 - [Study PR #42686 Add patch for fullgraph compilation](../logs/2026.05.18.02.md)
 - [Low precision data formats](../logs/2026.05.18.03.md)
 - [Fix #43037 Gemma4 Tool Parser Multiple Tool Calls in Single Delta](../logs/2026.05.20.00.md)
+- [Antigravity Experience and Agent Capability Analysis](../logs/2026.05.20.01.md)
