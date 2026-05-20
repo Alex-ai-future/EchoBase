@@ -22,11 +22,43 @@ MONTHS = {
     "12": "December"
 }
 
-TOPIC_HEADERS = {
-    "agent": "Agent",
-    "investment": "Investment",
-    "vllm": "VLLM"
-}
+def parse_existing_topics(index_md_path):
+    topics = {}
+    if not os.path.exists(index_md_path):
+        return topics
+        
+    with open(index_md_path, "r", encoding="utf-8") as f:
+        content = f.read()
+        
+    # Find table lines to parse existing descriptions
+    lines = content.splitlines()
+    for line in lines:
+        line = line.strip()
+        if line.startswith("|") and line.endswith("|"):
+            parts = [p.strip() for p in line.split("|")]
+            # A split of '| A | B | C |' results in ['', 'A', 'B', 'C', '']
+            if len(parts) >= 5:
+                topic_name = parts[1]
+                topic_desc = parts[2]
+                topic_link_raw = parts[3]
+                
+                # Skip header and divider lines
+                if topic_name.lower() in ("topic", "topicname") or all(c in "- :" for c in topic_name):
+                    continue
+                    
+                # Extract link target from markdown link e.g., [indexs/agent.md](indexs/agent.md) -> indexs/agent.md
+                link_match = re.search(r"\[.*\]\((.*)\)", topic_link_raw)
+                topic_link = link_match.group(1) if link_match else topic_link_raw
+                
+                # Derive topic key from link or name, e.g. indexs/agent.md -> agent
+                topic_key = os.path.basename(topic_link).replace(".md", "").lower()
+                
+                topics[topic_key] = {
+                    "name": topic_name,
+                    "desc": topic_desc,
+                    "link": topic_link
+                }
+    return topics
 
 def parse_frontmatter(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -122,16 +154,7 @@ def rebuild():
     
     print(f"Found {len(logs)} valid logs.")
     
-    # 2. Build indexs/all.md
-    all_content = f"# All\n\n{generate_markdown_list(logs, is_root=False)}\n"
-    os.makedirs(INDEXS_DIR, exist_ok=True)
-    all_md_path = os.path.join(INDEXS_DIR, "all.md")
-    with open(all_md_path, "w", encoding="utf-8") as f:
-        f.write(all_content)
-    print("Rebuilt indexs/all.md")
-    
-    # 3. Build topic files (indexs/<topic>.md)
-    # Collect all topics
+    # 2. Collect all topics and dynamic mapping
     topics_map = {}
     for log in logs:
         for topic in log["topics"]:
@@ -139,36 +162,66 @@ def rebuild():
                 topics_map[topic] = []
             topics_map[topic].append(log)
             
+    # Parse existing topics from current index.md
+    topic_info = parse_existing_topics(INDEX_MD_PATH)
+    
+    # Always guarantee "all" is defined
+    if "all" not in topic_info:
+        topic_info["all"] = {
+            "name": "All",
+            "desc": "All logs in chronological order",
+            "link": "indexs/all.md"
+        }
+        
+    # Dynamically register any new topic not in topic_info
+    for topic in topics_map.keys():
+        if topic not in topic_info:
+            topic_info[topic] = {
+                "name": topic.upper() if len(topic) <= 4 else topic.replace("-", " ").capitalize(),
+                "desc": f"{topic.replace('-', ' ').capitalize()} related discussions and logs",
+                "link": f"indexs/{topic}.md"
+            }
+    
+    # 3. Build indexs/all.md
+    all_content = f"# All\n\n{generate_markdown_list(logs, is_root=False)}\n"
+    os.makedirs(INDEXS_DIR, exist_ok=True)
+    all_md_path = os.path.join(INDEXS_DIR, "all.md")
+    with open(all_md_path, "w", encoding="utf-8") as f:
+        f.write(all_content)
+    print("Rebuilt indexs/all.md")
+    
+    # 4. Build topic files (indexs/<topic>.md)
     for topic, topic_logs in topics_map.items():
-        topic_title = TOPIC_HEADERS.get(topic, topic.capitalize())
+        topic_title = topic_info[topic]["name"] if topic in topic_info else topic.capitalize()
         topic_content = f"# {topic_title}\n\n{generate_markdown_list(topic_logs, is_root=False)}\n"
         topic_path = os.path.join(INDEXS_DIR, f"{topic}.md")
         with open(topic_path, "w", encoding="utf-8") as f:
             f.write(topic_content)
         print(f"Rebuilt indexs/{topic}.md")
         
-    # 4. Update index.md (All Logs section)
-    if os.path.exists(INDEX_MD_PATH):
-        with open(INDEX_MD_PATH, "r", encoding="utf-8") as f:
-            index_content = f.read()
-            
-        # Match ## All Logs case-insensitively
-        match = re.search(r"^(##\s+All\s+Logs.*)$", index_content, re.IGNORECASE | re.MULTILINE)
-        if match:
-            # Split before the header
-            header_start = match.start()
-            base_content = index_content[:header_start].rstrip()
-        else:
-            base_content = index_content.rstrip()
-            
-        new_all_logs_section = f"## All Logs\n\n{generate_markdown_list(logs, is_root=True)}"
-        new_index_content = f"{base_content}\n\n{new_all_logs_section}\n"
+    # 5. Rebuild index.md completely
+    index_lines = [
+        "# Index",
+        "",
+        "| Topic | Description | Link |",
+        "|-------|-------------|------|"
+    ]
+    
+    # "all" is first, followed by alphabetical active topics
+    sorted_keys = ["all"] + sorted([k for k in topic_info.keys() if k != "all" and (k in topics_map or k == "all")])
+    for key in sorted_keys:
+        info = topic_info[key]
+        index_lines.append(f"| {info['name']} | {info['desc']} | [{info['link']}]({info['link']}) |")
         
-        with open(INDEX_MD_PATH, "w", encoding="utf-8") as f:
-            f.write(new_index_content)
-        print("Updated index.md with latest logs list.")
-    else:
-        print(f"Warning: index.md not found at {INDEX_MD_PATH}")
+    index_lines.append("")
+    index_lines.append("## All Logs")
+    index_lines.append("")
+    index_lines.append(generate_markdown_list(logs, is_root=True))
+    index_lines.append("")
+    
+    with open(INDEX_MD_PATH, "w", encoding="utf-8") as f:
+        f.write("\n".join(index_lines))
+    print("Rebuilt index.md completely.")
 
 if __name__ == "__main__":
     rebuild()
