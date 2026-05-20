@@ -31,7 +31,7 @@
 - **Encoding**: UTF-8
 
 ## index.md
-- **Purpose**: Main page for GitHub Pages, displays all topics in table format
+- **Purpose**: Main page for GitHub Pages, displays all topics in table format and the list of all logs in chronological order.
 - **Content Format**:
   ```markdown
   # Index
@@ -39,6 +39,11 @@
   | Topic | Description | Link |
   |-------|-------------|------|
   | TopicName | Brief description | [indexs/topic.md](indexs/topic.md) |
+
+  ## All Logs
+
+  --- Month YYYY ---
+  - [Brief description of core idea](logs/YYYY.MM.D.N.md)
   ```
 - **Encoding**: UTF-8
 
@@ -61,3 +66,7 @@
 - **Language Policy**: 
   - `logs/` files: Chinese
   - All other files (`indexs/`, `README.md`, `AGENTS.md`): English
+- **Index Maintenance**: When a new log is created, the agent must update:
+  - The corresponding topic index file in `indexs/`
+  - The special index file `indexs/all.md`
+  - The `All Logs` section in `index.md` (note: links in `index.md` must point directly to `logs/` instead of `../logs/`)
