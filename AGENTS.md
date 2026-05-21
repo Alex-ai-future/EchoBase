@@ -71,6 +71,9 @@
 - **Language Policy**: 
   - `logs/` files: Chinese
   - All other files (`indexs/`, `README.md`, `AGENTS.md`): English
+- **Topic Management**: 
+  - **DO NOT create new topics automatically.** Only use existing topics from the `indexs/` directory unless the user explicitly requests a new topic to be created.
+  - If a log requires a topic that doesn't exist, ask the user before creating a new topic file in `indexs/`.
 - **Index Maintenance**: When a new log is created:
   1. Write the log file with correct YAML frontmatter.
   2. Run `python3 scripts/rebuild_indexes.py` locally to update indices (or rely on the GitHub Actions workflow which rebuilds them automatically on push).
