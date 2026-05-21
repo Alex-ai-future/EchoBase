@@ -8,3 +8,4 @@
 - 2026-05-18 - [Study PR #42686 Add patch for fullgraph compilation](../logs/2026.05.18.02.md)
 - 2026-05-18 - [Low precision data formats](../logs/2026.05.18.03.md)
 - 2026-05-20 - [Fix #43037 Gemma4 Tool Parser Multiple Tool Calls in Single Delta](../logs/2026.05.20.00.md)
+- 2026-05-21 - [Fix Auto-Functionalized for Fused DeepSeek V4 QNorm ROPE](../logs/2026.05.21.01.md)
