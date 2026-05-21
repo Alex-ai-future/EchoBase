@@ -19,3 +19,4 @@
 - 2026-05-18 - [Low precision data formats](logs/2026.05.18.03.md)
 - 2026-05-20 - [Fix #43037 Gemma4 Tool Parser Multiple Tool Calls in Single Delta](logs/2026.05.20.00.md)
 - 2026-05-20 - [Antigravity Experience and Agent Capability Analysis](logs/2026.05.20.01.md)
+- 2026-05-21 - [Learning Gemini New Tips](logs/2026.05.21.00.md)
