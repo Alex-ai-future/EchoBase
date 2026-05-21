@@ -165,14 +165,6 @@ def rebuild():
     # Parse existing topics from current index.md
     topic_info = parse_existing_topics(INDEX_MD_PATH)
     
-    # Always guarantee "all" is defined
-    if "all" not in topic_info:
-        topic_info["all"] = {
-            "name": "All",
-            "desc": "All logs in chronological order",
-            "link": "indexs/all.md"
-        }
-        
     # Dynamically register any new topic not in topic_info
     for topic in topics_map.keys():
         if topic not in topic_info:
@@ -182,15 +174,8 @@ def rebuild():
                 "link": f"indexs/{topic}.md"
             }
     
-    # 3. Build indexs/all.md
-    all_content = f"# All\n\n{generate_markdown_list(logs, is_root=False)}\n"
+    # 3. Build topic files (indexs/<topic>.md)
     os.makedirs(INDEXS_DIR, exist_ok=True)
-    all_md_path = os.path.join(INDEXS_DIR, "all.md")
-    with open(all_md_path, "w", encoding="utf-8") as f:
-        f.write(all_content)
-    print("Rebuilt indexs/all.md")
-    
-    # 4. Build topic files (indexs/<topic>.md)
     for topic, topic_logs in topics_map.items():
         topic_title = topic_info[topic]["name"] if topic in topic_info else topic.capitalize()
         topic_content = f"# {topic_title}\n\n{generate_markdown_list(topic_logs, is_root=False)}\n"
@@ -199,7 +184,7 @@ def rebuild():
             f.write(topic_content)
         print(f"Rebuilt indexs/{topic}.md")
         
-    # 5. Rebuild index.md completely
+    # 4. Rebuild index.md completely
     index_lines = [
         "# Index",
         "",
@@ -207,8 +192,8 @@ def rebuild():
         "|-------|-------------|------|"
     ]
     
-    # "all" is first, followed by alphabetical active topics
-    sorted_keys = ["all"] + sorted([k for k in topic_info.keys() if k != "all" and (k in topics_map or k == "all")])
+    # Alphabetical active topics
+    sorted_keys = sorted([k for k in topic_info.keys() if k in topics_map])
     for key in sorted_keys:
         info = topic_info[key]
         index_lines.append(f"| {info['name']} | {info['desc']} | [{info['link']}]({info['link']}) |")
