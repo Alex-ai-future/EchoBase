@@ -24,3 +24,4 @@
 - 2026-05-22 - [Memory Types and Processes](logs/2026.05.22.00.md)
 - 2026-05-22 - [GPU Programming Ladder](logs/2026.05.22.01.md)
 - 2026-05-22 - [DeepSeek V4 TP Size Exceeds N Groups Error #43182](logs/2026.05.22.02.md)
+- 2026-05-25 - [Learning Fp8LinearMethod](logs/2026.05.25.00.md)
