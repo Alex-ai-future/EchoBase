@@ -27,3 +27,4 @@
 - 2026-05-25 - [Learning Fp8LinearMethod](logs/2026.05.25.00.md)
 - 2026-05-27 - [vLLM SimpleCPUOffloadConnector Process](logs/2026.05.27.00.md)
 - 2026-05-27 - [vLLM SimpleCPUOffloadConnector Impletation](logs/2026.05.27.01.md)
+- 2026-05-28 - [In-Depth Study of CPU Connector](logs/2026.05.28.00.md)
